@@ -23,7 +23,7 @@ public class kafkaTopicConfig {
     }
     @Bean
     public NewTopic productTopic() {
-        return new NewTopic("topic-1", 1, (short) 1);
+        return new NewTopic("myTopic", 1, (short) 1);
     }
 
 }

@@ -14,12 +14,17 @@ public class EmailWebServiceApplication {
 		SpringApplication.run(EmailWebServiceApplication.class, args);
 	}
 
-	@Bean
+/*	@Bean
 	CommandLineRunner start(ProductService productService){
 		return args -> {
+			int i = 0 ;
+			while (true){
+				productService.sendMessage("message " + i );
+				i++ ;
+				Thread.sleep(1000);
+			}
 
-			productService.sendMessage("first message");
 		};
-	}
+	}*/
 
 }
