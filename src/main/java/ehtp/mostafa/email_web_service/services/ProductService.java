@@ -1,7 +1,7 @@
 package ehtp.mostafa.email_web_service.services;
 
-import ehtp.mostafa.email_web_service.entities.ProducerMessage;
-import ehtp.mostafa.email_web_service.producer.Topic1Producer;
+import ehtp.mostafa.email_web_service.entities.Message;
+import ehtp.mostafa.email_web_service.producer.TopicProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,16 +9,24 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ProductService {
-    private Topic1Producer topic1Producer;
+    private TopicProducer producer;
 
     @Autowired
-    public ProductService(Topic1Producer topic1Producer) {
-        this.topic1Producer = topic1Producer;
+    public ProductService(TopicProducer prod) {
+        this.producer = prod;
     }
 
-    public void sendMessage(String  message) {
+    public void sendMessageToSMSTopic(Message message) {
         log.info("[ProductService] send product to topic");
-        topic1Producer.send(message);
+        producer.send("sms", message  );
+    }
+    public void sendMessageToMailTopic(Message message) {
+        log.info("[ProductService] send product to topic");
+        producer.send("mail", message  );
+    }
+    public void sendMessageToWebHookTopic(Message message) {
+        log.info("[ProductService] send product to topic");
+        producer.send("webhook", message  );
     }
 
 }

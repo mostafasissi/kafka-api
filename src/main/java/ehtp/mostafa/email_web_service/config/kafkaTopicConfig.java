@@ -1,6 +1,6 @@
 package ehtp.mostafa.email_web_service.config;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +22,16 @@ public class kafkaTopicConfig {
         return new KafkaAdmin(configs);
     }
     @Bean
-    public NewTopic productTopic() {
-        return new NewTopic("myTopic", 1, (short) 1);
+    public NewTopic smsTopic() {
+        return new NewTopic("sms", 2, (short) 2);
+    }
+    @Bean
+    public NewTopic mailTopic() {
+        return new NewTopic("mail", 2, (short) 2);
+    }
+    @Bean
+    public NewTopic webhookTopic() {
+        return new NewTopic("webhook", 2, (short) 2);
     }
 
 }

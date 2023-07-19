@@ -1,6 +1,6 @@
 package ehtp.mostafa.email_web_service;
 
-import ehtp.mostafa.email_web_service.entities.ProducerMessage;
+import ehtp.mostafa.email_web_service.entities.Message;
 import ehtp.mostafa.email_web_service.services.ProductService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,17 +14,18 @@ public class EmailWebServiceApplication {
 		SpringApplication.run(EmailWebServiceApplication.class, args);
 	}
 
-/*	@Bean
+	@Bean
 	CommandLineRunner start(ProductService productService){
 		return args -> {
-			int i = 0 ;
-			while (true){
-				productService.sendMessage("message " + i );
-				i++ ;
-				Thread.sleep(1000);
+			for (int i=0 ; i<3 ; i++){
+				Message message = new Message("from" , "to" , "Hello from kafka"  );
+				productService.sendMessageToMailTopic(message);
+				productService.sendMessageToWebHookTopic(message);
+				productService.sendMessageToSMSTopic(message);
+				Thread.sleep(100);
 			}
 
 		};
-	}*/
+	}
 
 }

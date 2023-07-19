@@ -1,5 +1,7 @@
 package ehtp.mostafa.email_web_service.config;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
+import ehtp.mostafa.email_web_service.entities.Message;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -11,6 +13,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,18 +26,22 @@ public class KafkaConsumerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ConsumerFactory<String , String >  consumerFactory(){
+    public ConsumerFactory<String , Message>  consumerFactory(){
         Map<String , Object > config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG , bootstrapAddress);
         config.put(ConsumerConfig.GROUP_ID_CONFIG , "cunsuming");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG , StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG , StringDeserializer.class);
-        return new DefaultKafkaConsumerFactory<>(config);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG , JsonSerializer.class);
+        return new DefaultKafkaConsumerFactory<>(
+                config,
+                new StringDeserializer(),
+                new JsonDeserializer<>(Message.class)
+        );
     }
 
     @Bean
-    ConcurrentKafkaListenerContainerFactory<String ,String> kafkaListenerContainerFactory(){
-        ConcurrentKafkaListenerContainerFactory<String,String> factory =
+    ConcurrentKafkaListenerContainerFactory<String ,Message> kafkaListenerContainerFactory(){
+        ConcurrentKafkaListenerContainerFactory<String,Message> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory());

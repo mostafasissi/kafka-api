@@ -1,5 +1,6 @@
 package ehtp.mostafa.email_web_service.config;
 
+import ehtp.mostafa.email_web_service.entities.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -25,24 +26,18 @@ public class KafkaProducerConfig {
     private String bootstrapAddress ;
 
     @Bean
-    public ProducerFactory<String , String> producerFactory(){
+    public ProducerFactory<String , Message> producerFactory(){
         Map<String , Object> prodConf = new HashMap<>();
         prodConf.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG , bootstrapAddress);
         prodConf.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG , StringSerializer.class);
         prodConf.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG  , JsonSerializer.class);
         prodConf.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG , "20971520");
 
-        return new DefaultKafkaProducerFactory<>(
-                        prodConf ,
-                        new StringSerializer() ,
-                        new JsonSerializer<>()
-                );
+        return new DefaultKafkaProducerFactory<>(prodConf);
     }
 
     @Bean
-    KafkaTemplate<String , String> jsonKafkaTemplate(
-            ProducerFactory<String , String> jsonProducerFactory
-    ){
-        return new KafkaTemplate<>(jsonProducerFactory);
+    KafkaTemplate<String , Message> jsonKafkaTemplate(){
+        return new KafkaTemplate<>(producerFactory());
     }
 }

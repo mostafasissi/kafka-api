@@ -1,19 +1,19 @@
 0
-29
+30
 topic-1 1 0
 __consumer_offsets 10 0
 __consumer_offsets 0 0
 __consumer_offsets 6 0
 __consumer_offsets 20 0
 __consumer_offsets 30 0
-topic-1 0 2
+topic-1 0 0
 __consumer_offsets 32 0
 __consumer_offsets 26 0
 myTopic 0 0
 __consumer_offsets 48 0
 __consumer_offsets 18 0
 __consumer_offsets 8 0
-__consumer_offsets 22 5
+__consumer_offsets 22 7
 __consumer_offsets 24 0
 __consumer_offsets 46 0
 __consumer_offsets 40 0
@@ -23,6 +23,7 @@ __consumer_offsets 4 0
 __consumer_offsets 2 0
 product 0 0
 __consumer_offsets 44 0
+newTopic 0 0
 __consumer_offsets 38 0
 __consumer_offsets 36 0
 __consumer_offsets 16 0
